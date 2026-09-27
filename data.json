@@ -37,5 +37,18 @@
       "fileUrl": ""
     }
   ],
-  "students": []
+  "students": [
+    {
+      "id": 1790536653294,
+      "name": "فيصل العريبي",
+      "seatNumber": "1234",
+      "civilId": "345677",
+      "section": "12 / 1",
+      "phone": "93936636",
+      "level": "high",
+      "score": "70",
+      "notes": "",
+      "fileUrl": ""
+    }
+  ]
 }
