@@ -92,7 +92,7 @@
             th, td {
                 border: 1px solid #64748b !important;
                 padding: 8px !important;
-                font-size: 11pt !important;
+                font-size: 10pt !important;
             }
         }
     </style>
@@ -174,7 +174,7 @@
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- ==================== TAB 1: DASHBOARD ==================== -->
-        <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-300 transform opacity-0 translate-y-2" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="space-y-8">
+        <div x-show="activeTab === 'dashboard'" x-transition:enter="transition ease-out duration-300 transform opacity-0 translate-y-2" class="space-y-8">
             
             <!-- Quick Stat Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -219,17 +219,54 @@
                 </div>
             </div>
 
-            <!-- Chart Section & Cloud Integration Card -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Sections Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 
-                <!-- Performance Distribution Chart -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+                <!-- بطاقة إجراءات سريعة للمعلم -->
+                <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-100 shadow-sm flex flex-col items-center text-center">
+                    <div class="flex items-center justify-center gap-2 text-xl sm:text-2xl font-extrabold text-slate-800 mb-2">
+                        <span class="text-amber-500">⚡</span>
+                        <h2>إجراءات سريعة للمعلم</h2>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed">
+                        تحكم سريع بكافة أدوات المنصة، مع رفع وحفظ مستندات وأعمال الطلاب تلقائياً.
+                    </p>
+
+                    <div class="w-full space-y-3">
+                        <button @click="openAddStudentModal()" class="w-full py-3.5 px-5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-2xl shadow-lg shadow-brand-600/20 flex items-center justify-center gap-3 transition duration-200 text-xs sm:text-sm">
+                            <span>تسجيل طالب جديد في السجل</span>
+                            <i class="fa-solid fa-user-plus text-base"></i>
+                        </button>
+
+                        <button @click="openAddStudentModal()" class="w-full py-3.5 px-5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-2xl shadow-md flex items-center justify-center gap-3 transition duration-200 text-xs sm:text-sm">
+                            <span>رفع أعمال ونماذج طالب</span>
+                            <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                        </button>
+
+                        <button @click="openAddDocModal()" class="w-full py-3.5 px-5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl flex items-center justify-center gap-3 transition duration-200 text-xs sm:text-sm">
+                            <span>إرفاق وثيقة مرجعية / سجل</span>
+                            <i class="fa-solid fa-file-circle-plus text-base"></i>
+                        </button>
+
+                        <button @click="openAddAssessmentModal()" class="w-full py-3.5 px-5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-2xl flex items-center justify-center gap-3 transition duration-200 text-xs sm:text-sm">
+                            <span>إضافة أداة تقويم / Rubric</span>
+                            <i class="fa-solid fa-clipboard-question text-base"></i>
+                        </button>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-slate-100 w-full text-xs text-slate-400 font-medium">
+                        ملاحظة: يمكنك حفظ البيانات محلياً أو ربطها مع <span class="font-bold text-slate-600">GitHub</span>
+                    </div>
+                </div>
+
+                <!-- Performance Chart -->
+                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between h-full">
                     <div class="flex items-center justify-between mb-6">
                         <div>
-                            <h2 class="text-lg font-bold text-slate-800">توزيع الطلاب حسب المستوى التحصيلي</h2>
-                            <p class="text-xs text-slate-400">تصنيف مستويات تحصيل عينات تدقيق الطلاب</p>
+                            <h2 class="text-base font-bold text-slate-800">توزيع الطلاب حسب المستوى</h2>
+                            <p class="text-xs text-slate-400">تصنيف مستويات تحصيل عينات التدقيق</p>
                         </div>
-                        <span class="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full font-medium">محدث فورياً</span>
+                        <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-xs rounded-full font-medium">محدث فورياً</span>
                     </div>
                     <div class="relative h-64 flex justify-center items-center">
                         <canvas id="levelChart"></canvas>
@@ -237,7 +274,7 @@
                 </div>
 
                 <!-- Vercel & GitHub Status Box -->
-                <div class="bg-gradient-to-br from-slate-900 to-brand-900 text-white p-6 rounded-2xl shadow-xl flex flex-col justify-between">
+                <div class="bg-gradient-to-br from-slate-900 to-brand-900 text-white p-6 rounded-2xl shadow-xl flex flex-col justify-between h-full">
                     <div>
                         <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-4">
                             <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
@@ -269,101 +306,114 @@
                         </button>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <!-- ==================== TAB 2: ROSTER ==================== -->
         <div x-show="activeTab === 'roster'" x-transition:enter="transition ease-out duration-300 transform opacity-0 translate-y-2" class="space-y-6">
             
-            <!-- Actions & Search Bar -->
-            <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row gap-4 items-center justify-between no-print">
-                
-                <!-- Search Input -->
-                <div class="relative w-full sm:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400 text-sm"></i>
-                    <input type="text" x-model="searchQuery" placeholder="بحث باسم الطالب أو رقم الجلوس..." 
-                           class="w-full pr-10 pl-4 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm no-print">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-slate-100 pb-6 mb-6">
+                    <div>
+                        <div class="flex items-center gap-3 mb-1">
+                            <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800">سجل أسماء الطلاب وبياناتهم الشامل</h2>
+                            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded-full">سجل الفصل</span>
+                        </div>
+                        <p class="text-xs sm:text-sm text-slate-500">
+                            إدارة شاملة لأسماء طلاب الصف الثاني عشر، الشعب، تحديد عينات التدقيق، والتواصل مع أولياء الأمور.
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button @click="openAddStudentModal()" class="px-5 py-2.5 bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-brand-600/20 flex items-center gap-2 transition">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>إضافة طالب جديد</span>
+                        </button>
+
+                        <button @click="printRoster()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold rounded-xl flex items-center gap-2 transition">
+                            <i class="fa-solid fa-print"></i>
+                            <span>طباعة الكشف</span>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Filters & Action Buttons -->
-                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
-                    <select x-model="filterSection" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
-                        <option value="">جميع الشعب</option>
-                        <template x-for="sec in uniqueSections" :key="sec">
-                            <option :value="sec" x-text="sec"></option>
-                        </template>
-                    </select>
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                    <div class="md:col-span-5 relative">
+                        <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400 text-sm"></i>
+                        <input type="text" x-model="searchQuery" placeholder="بحث بالاسم، رقم الجلوس، أو الهاتف..." 
+                               class="w-full pr-10 pl-4 py-2.5 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition">
+                    </div>
 
-                    <button @click="openAddStudentModal()" class="px-4 py-2 bg-brand-500 hover:bg-brand-600 text-white text-xs sm:text-sm font-semibold rounded-xl flex items-center gap-2 shadow-sm transition">
-                        <i class="fa-solid fa-user-plus"></i>
-                        <span>إضافة طالب جديد</span>
-                    </button>
+                    <div class="md:col-span-3">
+                        <select x-model="filterSection" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700">
+                            <option value="">جميع الشعب الدراسية</option>
+                            <template x-for="sec in uniqueSections" :key="sec">
+                                <option :value="sec" x-text="'الشعبة ' + sec"></option>
+                            </template>
+                        </select>
+                    </div>
 
-                    <button @click="printRoster()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl flex items-center gap-2 transition">
-                        <i class="fa-solid fa-print"></i>
-                        <span>طباعة السجل</span>
-                    </button>
+                    <div class="md:col-span-4">
+                        <select x-model="filterStatus" class="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-700">
+                            <option value="">جميع الحالات (محددة وغير محددة)</option>
+                            <option value="عينة تدقيق اعتمدت">عينة تدقيق اعتمدت</option>
+                            <option value="قيد التدقيق">قيد التدقيق</option>
+                            <option value="لم تحدد كعينة">لم تحدد كعينة</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <!-- Print Header Official Notice -->
             <div class="hidden print-only mb-6 text-center border-b pb-4">
-                <h2 class="text-xl font-bold">سجل أسماء وبيانات طلاب الصف الثاني عشر</h2>
-                <p class="text-sm text-slate-600">منصة التدقيق الرقمي والاعتماد الأكاديمي - دبلوم التعليم العام</p>
+                <h2 class="text-xl font-bold">سجل أسماء الطلاب وبياناتهم الشامل</h2>
+                <p class="text-sm text-slate-600">منصة التدقيق الرقمي والاعتماد الأكاديمي - الصف الثاني عشر</p>
             </div>
 
-            <!-- Students Table -->
-            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden print-container">
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden print-container">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right border-collapse">
                         <thead>
-                            <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs font-semibold">
-                                <th class="p-4">#</th>
-                                <th class="p-4">اسم الطالب الرباعي</th>
-                                <th class="p-4">رقم الجلوس</th>
-                                <th class="p-4">الرقم المدني</th>
-                                <th class="p-4">الشعبة</th>
-                                <th class="p-4">الهاتف</th>
-                                <th class="p-4">المستوى التحصيلي</th>
-                                <th class="p-4">الملاحظات</th>
+                            <tr class="bg-[#0f172a] text-white text-xs font-bold">
+                                <th class="p-4 w-12 text-center">#</th>
+                                <th class="p-4">الاسم الرباعي للطالب</th>
+                                <th class="p-4 text-center">رقم الجلوس / المدني</th>
+                                <th class="p-4 text-center">الصف / الشعبة</th>
+                                <th class="p-4 text-center">حالة عينة التدقيق</th>
+                                <th class="p-4 text-center">هاتف ولي الأمر</th>
+                                <th class="p-4">الملاحظات الخاصة</th>
                                 <th class="p-4 text-center no-print">الإجراءات</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
                             <template x-for="(st, idx) in filteredStudents" :key="st.id">
                                 <tr class="hover:bg-slate-50/80 transition">
-                                    <td class="p-4 font-bold text-slate-400" x-text="idx + 1"></td>
+                                    <td class="p-4 text-center font-bold text-slate-400" x-text="idx + 1"></td>
                                     <td class="p-4 font-bold text-slate-800" x-text="st.name"></td>
-                                    <td class="p-4 font-mono text-brand-600 font-semibold" x-text="st.seatNumber"></td>
-                                    <td class="p-4 font-mono text-slate-500" x-text="st.civilId"></td>
-                                    <td class="p-4">
-                                        <span class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg font-semibold" x-text="st.section"></span>
+                                    <td class="p-4 text-center font-mono font-semibold text-slate-700" x-text="st.seatNumber"></td>
+                                    <td class="p-4 text-center">
+                                        <span class="px-3 py-1 bg-slate-100 text-slate-700 rounded-lg font-bold text-xs" x-text="st.section"></span>
                                     </td>
-                                    <td class="p-4 font-mono dir-ltr text-right" x-text="st.phone"></td>
-                                    <td class="p-4">
-                                        <span class="px-2.5 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1"
-                                              :class="{
-                                                  'bg-emerald-100 text-emerald-700': st.level === 'high',
-                                                  'bg-amber-100 text-amber-700': st.level === 'medium',
-                                                  'bg-rose-100 text-rose-700': st.level === 'low'
-                                              }">
-                                            <i class="fa-solid text-[10px]"
-                                               :class="{
-                                                   'fa-circle-check': st.level === 'high',
-                                                   'fa-circle-minus': st.level === 'medium',
-                                                   'fa-circle-exclamation': st.level === 'low'
-                                               }"></i>
-                                            <span x-text="st.level === 'high' ? 'عالي' : (st.level === 'medium' ? 'متوسط' : 'دون المتوسط')"></span>
+                                    <td class="p-4 text-center">
+                                        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold inline-flex items-center gap-1.5 shadow-sm">
+                                            <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                                            <span x-text="st.auditStatus || 'عينة تدقيق اعتمدت'"></span>
                                         </span>
                                     </td>
-                                    <td class="p-4 max-w-xs truncate text-slate-500" x-text="st.notes || '-'"></td>
-                                    <td class="p-4 no-print">
-                                        <div class="flex items-center justify-center space-x-2 space-x-reverse">
-                                            <button @click="openEditStudentModal(st)" class="p-2 text-slate-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition" title="تعديل">
-                                                <i class="fa-solid fa-pen-to-square"></i>
+                                    <td class="p-4 text-center font-mono font-bold text-slate-800 dir-ltr" x-text="st.phone || '-'"></td>
+                                    <td class="p-4 text-slate-600 font-medium" x-text="st.notes || '-'"></td>
+                                    <td class="p-4 text-center no-print">
+                                        <div class="flex items-center justify-center gap-2">
+                                            <template x-if="st.fileUrl">
+                                                <button @click="openPreview(st.fileUrl, st.name)" class="w-8 h-8 rounded-lg bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition" title="معاينة الملف">
+                                                    <i class="fa-solid fa-eye text-xs"></i>
+                                                </button>
+                                            </template>
+                                            <button @click="openEditStudentModal(st)" class="w-8 h-8 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-700 flex items-center justify-center transition" title="تعديل البيانات">
+                                                <i class="fa-solid fa-pen-to-square text-xs"></i>
                                             </button>
-                                            <button @click="confirmDeleteStudent(st.id)" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition" title="حذف">
-                                                <i class="fa-solid fa-trash-can"></i>
+                                            <button @click="confirmDeleteStudent(st.id)" class="w-8 h-8 rounded-lg bg-rose-100 hover:bg-rose-200 text-rose-600 flex items-center justify-center transition" title="حذف الطالب">
+                                                <i class="fa-solid fa-trash-can text-xs"></i>
                                             </button>
                                         </div>
                                     </td>
@@ -371,9 +421,9 @@
                             </template>
                             <template x-if="filteredStudents.length === 0">
                                 <tr>
-                                    <td colspan="9" class="p-8 text-center text-slate-400">
+                                    <td colspan="8" class="p-8 text-center text-slate-400">
                                         <i class="fa-solid fa-user-slash text-3xl mb-2"></i>
-                                        <p>لا توجد بيانات طلاب مطابقة للبحث الحالي.</p>
+                                        <p>لا توجد بيانات طلاب مطابقة للبحث أو الفلتر المختار.</p>
                                     </td>
                                 </tr>
                             </template>
@@ -383,7 +433,7 @@
             </div>
         </div>
 
-        <!-- ==================== TAB 3: DOCUMENTS ==================== -->
+        <!-- ==================== TAB 3: DOCUMENTS (الوثائق المرجعية ببطاقة الصورة) ==================== -->
         <div x-show="activeTab === 'docs'" x-transition:enter="transition ease-out duration-300 transform opacity-0 translate-y-2" class="space-y-6">
             
             <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm no-print">
@@ -397,34 +447,46 @@
                 </button>
             </div>
 
-            <!-- Documents Grid -->
+            <!-- Documents Grid (مطابق للتصميم في الصورة) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="doc in documents" :key="doc.id">
-                    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition">
+                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition">
                         <div>
-                            <div class="flex items-start justify-between mb-3">
-                                <div class="w-10 h-10 rounded-xl bg-cyan-50 text-cyan-600 flex items-center justify-center text-lg font-bold">
-                                    <i class="fa-solid fa-file-pdf"></i>
+                            <!-- الهيدر الداخلي للبطاقة: شارة التصنيف على اليمين وأيقونة PDF المزخرفة على اليسار -->
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-bold rounded-xl" x-text="doc.category || 'وثائق رسمية'"></span>
+                                
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex flex-col items-center justify-center font-bold shadow-sm">
+                                    <i class="fa-solid fa-file-pdf text-xl"></i>
                                 </div>
-                                <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-[11px] font-semibold rounded-md" x-text="doc.category"></span>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm mb-1" x-text="doc.title"></h3>
-                            <p class="text-xs text-slate-500 mb-4 line-clamp-2" x-text="doc.description"></p>
+
+                            <!-- عنوان الوثيقة ووصفها -->
+                            <h3 class="font-extrabold text-slate-800 text-base sm:text-lg mb-2 leading-snug" x-text="doc.title"></h3>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed line-clamp-2" x-text="doc.description"></p>
                         </div>
 
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="text-slate-400 font-mono" x-text="doc.date"></span>
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <template x-if="doc.fileUrl">
-                                    <a :href="doc.fileUrl" target="_blank" class="px-3 py-1.5 bg-brand-50 text-brand-600 font-semibold rounded-lg hover:bg-brand-100 transition flex items-center gap-1">
-                                        <i class="fa-solid fa-download"></i>
-                                        <span>تحميل</span>
-                                    </a>
-                                </template>
-                                <button @click="confirmDeleteDoc(doc.id)" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
-                                    <i class="fa-solid fa-trash-can"></i>
+                        <!-- فوتر البطاقة السفلية (تاريخ الرفع + أزرار معاينة وحذف مطابقة للصورة) -->
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
+                            
+                            <!-- الإجراءات (معاينة وحذف) على اليمين -->
+                            <div class="flex items-center gap-3">
+                                <button @click="confirmDeleteDoc(doc.id)" class="text-rose-500 hover:text-rose-700 p-1 transition" title="حذف الوثيقة">
+                                    <i class="fa-solid fa-trash-can text-base"></i>
+                                </button>
+
+                                <button @click="openPreview(doc.fileUrl, doc.title)" class="text-brand-600 hover:text-brand-700 font-extrabold flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-eye text-base"></i>
+                                    <span>معاينة</span>
                                 </button>
                             </div>
+
+                            <!-- تاريخ الرفع على اليسار -->
+                            <div class="text-slate-400 font-medium">
+                                <span>تاريخ الرفع: </span>
+                                <span class="font-mono" x-text="doc.date"></span>
+                            </div>
+
                         </div>
                     </div>
                 </template>
@@ -445,33 +507,38 @@
                 </button>
             </div>
 
-            <!-- Assessment Tools Cards -->
+            <!-- Assessment Tools Cards (بطاقات أدوات التقويم) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="item in assessments" :key="item.id">
-                    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition">
+                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition">
                         <div>
-                            <div class="flex items-start justify-between mb-3">
-                                <span class="px-2.5 py-1 bg-brand-50 text-brand-700 text-xs font-bold rounded-lg" x-text="item.type"></span>
-                                <span class="text-xs font-extrabold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">
-                                    الدرجة: <span x-text="item.maxScore"></span>
-                                </span>
+                            <div class="flex items-start justify-between mb-4">
+                                <span class="px-3 py-1 bg-brand-50 text-brand-700 text-xs font-bold rounded-xl" x-text="item.type"></span>
+                                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex flex-col items-center justify-center font-bold text-xs shadow-sm">
+                                    <span>الدرجة</span>
+                                    <span class="text-sm font-extrabold" x-text="item.maxScore"></span>
+                                </div>
                             </div>
-                            <h3 class="font-bold text-slate-800 text-sm mb-1" x-text="item.title"></h3>
-                            <p class="text-xs text-slate-500 mb-4" x-text="item.description"></p>
+                            <h3 class="font-extrabold text-slate-800 text-base mb-2" x-text="item.title"></h3>
+                            <p class="text-xs sm:text-sm text-slate-500 mb-6 leading-relaxed" x-text="item.description"></p>
                         </div>
 
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="text-slate-400 truncate max-w-[120px]" x-text="item.fileName || 'مستند مرفق'"></span>
-                            <div class="flex items-center space-x-2 space-x-reverse">
-                                <template x-if="item.fileUrl">
-                                    <a :href="item.fileUrl" target="_blank" class="px-3 py-1.5 bg-emerald-50 text-emerald-600 font-semibold rounded-lg hover:bg-emerald-100 transition flex items-center gap-1">
-                                        <i class="fa-solid fa-eye"></i>
-                                        <span>عرض النموذج</span>
-                                    </a>
-                                </template>
-                                <button @click="confirmDeleteAssessment(item.id)" class="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg transition">
-                                    <i class="fa-solid fa-trash-can"></i>
+                        <!-- فوتر الإجراءات: معاينة وحذف + تاريخ الرفع -->
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
+                            <div class="flex items-center gap-3">
+                                <button @click="confirmDeleteAssessment(item.id)" class="text-rose-500 hover:text-rose-700 p-1 transition" title="حذف الأداة">
+                                    <i class="fa-solid fa-trash-can text-base"></i>
                                 </button>
+
+                                <button @click="openPreview(item.fileUrl, item.title)" class="text-brand-600 hover:text-brand-700 font-extrabold flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-eye text-base"></i>
+                                    <span>معاينة</span>
+                                </button>
+                            </div>
+
+                            <div class="text-slate-400 font-medium">
+                                <span>تاريخ الرفع: </span>
+                                <span class="font-mono" x-text="item.date || '2026-09-01'"></span>
                             </div>
                         </div>
                     </div>
@@ -495,12 +562,11 @@
                 </div>
             </div>
 
-            <!-- Work Samples Cards -->
+            <!-- Work Samples Cards (بطاقات عينات الطلاب) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <template x-for="st in samplesFilteredStudents" :key="st.id">
-                    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-5 flex flex-col justify-between hover:shadow-md transition relative overflow-hidden">
+                    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 flex flex-col justify-between hover:shadow-md transition relative overflow-hidden">
                         
-                        <!-- Level Accent Strip -->
                         <div class="absolute top-0 right-0 left-0 h-1.5"
                              :class="{
                                  'bg-emerald-500': st.level === 'high',
@@ -511,7 +577,7 @@
                         <div>
                             <div class="flex justify-between items-center mb-3 mt-1">
                                 <span class="text-xs font-bold text-slate-400" x-text="'الشعبة: ' + st.section"></span>
-                                <span class="px-2.5 py-0.5 rounded-full text-xs font-bold"
+                                <span class="px-3 py-1 rounded-full text-xs font-bold"
                                       :class="{
                                           'bg-emerald-100 text-emerald-700': st.level === 'high',
                                           'bg-amber-100 text-amber-700': st.level === 'medium',
@@ -520,22 +586,31 @@
                                       x-text="st.level === 'high' ? 'عينة عالي' : (st.level === 'medium' ? 'عينة متوسط' : 'عينة دون المتوسط')"></span>
                             </div>
 
-                            <h3 class="font-bold text-slate-800 text-base mb-1" x-text="st.name"></h3>
+                            <h3 class="font-extrabold text-slate-800 text-base mb-1" x-text="st.name"></h3>
                             <p class="text-xs font-mono text-brand-600 mb-3" x-text="'رقم الجلوس: ' + st.seatNumber"></p>
                             
-                            <div class="p-3 bg-slate-50 rounded-xl mb-4 border border-slate-100">
+                            <div class="p-3 bg-slate-50 rounded-2xl mb-4 border border-slate-100">
                                 <p class="text-xs text-slate-600 leading-relaxed" x-text="st.notes || 'لا توجد ملاحظات تدقيقية مضافة'"></p>
                             </div>
                         </div>
 
-                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="font-bold text-slate-700" x-text="'الدرجة: ' + (st.score || 'غير محدد')"></span>
-                            <template x-if="st.fileUrl">
-                                <a :href="st.fileUrl" target="_blank" class="px-3 py-1.5 bg-brand-50 text-brand-600 font-semibold rounded-lg hover:bg-brand-100 transition flex items-center gap-1">
-                                    <i class="fa-solid fa-file-arrow-down"></i>
-                                    <span>ورقة العينة المرفقة</span>
-                                </a>
-                            </template>
+                        <!-- فوتر بطاقة عينة الطالب: معاينة وحذف + الدرجة والتاريخ -->
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm">
+                            <div class="flex items-center gap-3">
+                                <button @click="confirmDeleteStudent(st.id)" class="text-rose-500 hover:text-rose-700 p-1 transition" title="حذف عينة الطالب">
+                                    <i class="fa-solid fa-trash-can text-base"></i>
+                                </button>
+
+                                <button @click="openPreview(st.fileUrl, st.name)" class="text-brand-600 hover:text-brand-700 font-extrabold flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-eye text-base"></i>
+                                    <span>معاينة</span>
+                                </button>
+                            </div>
+
+                            <div class="text-slate-500 font-bold">
+                                <span>الدرجة: </span>
+                                <span class="text-slate-800" x-text="st.score || 'غير محدد'"></span>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -544,11 +619,52 @@
 
     </main>
 
-    <!-- ==================== MODALS ==================== -->
+    <!-- ==================== MODALS & PREVIEW ==================== -->
+
+    <!-- File Preview Modal (نافذة المعاينة السريعة للملفات) -->
+    <div x-show="previewModal.show" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4" x-cloak x-transition>
+        <div class="bg-white rounded-3xl max-w-4xl w-full h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-slate-100">
+            <div class="flex items-center justify-between p-5 border-b border-slate-100 bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-file-pdf text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-800" x-text="previewModal.title"></h3>
+                        <p class="text-xs text-slate-400">معاينة المستند السحابي المرفق</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <template x-if="previewModal.url">
+                        <a :href="previewModal.url" download target="_blank" class="px-4 py-2 bg-brand-600 text-white text-xs font-bold rounded-xl flex items-center gap-2 hover:bg-brand-700 transition">
+                            <i class="fa-solid fa-download"></i>
+                            <span>تحميل</span>
+                        </a>
+                    </template>
+                    <button @click="previewModal.show = false" class="w-9 h-9 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl flex items-center justify-center transition">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex-1 bg-slate-100 p-2 relative flex items-center justify-center overflow-hidden">
+                <template x-if="previewModal.url">
+                    <iframe :src="previewModal.url" class="w-full h-full rounded-2xl border-0 shadow-inner"></iframe>
+                </template>
+                <template x-if="!previewModal.url">
+                    <div class="text-center p-8 text-slate-400">
+                        <i class="fa-solid fa-file-circle-exclamation text-5xl mb-3 text-slate-300"></i>
+                        <p class="font-bold text-sm">لم يتم ربط رابط ملف مباشر لهذه الوثيقة بعد.</p>
+                        <p class="text-xs mt-1">يمكنك رفع المستند من خلال خيار التعديل.</p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
 
     <!-- Student Modal (Add/Edit) -->
     <div x-show="showStudentModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" x-cloak x-transition>
-        <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
             <div class="flex items-center justify-between mb-4 border-b pb-3">
                 <h3 class="text-base font-bold text-slate-800" x-text="editingStudent ? 'تعديل بيانات طالب' : 'إضافة طالب جديد'"></h3>
                 <button @click="showStudentModal = false" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -562,23 +678,27 @@
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold mb-1">رقم الجلوس</label>
+                        <label class="block font-semibold mb-1">رقم الجلوس / الرقم المدني</label>
                         <input type="text" x-model="studentForm.seatNumber" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
                     </div>
                     <div>
-                        <label class="block font-semibold mb-1">الرقم المدني</label>
-                        <input type="text" x-model="studentForm.civilId" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
+                        <label class="block font-semibold mb-1">الشعبة الدراسية</label>
+                        <input type="text" x-model="studentForm.section" placeholder="12/1" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-semibold mb-1">الشعبة</label>
-                        <input type="text" x-model="studentForm.section" placeholder="12 / 1" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
+                        <label class="block font-semibold mb-1">هاتف ولي الأمر</label>
+                        <input type="text" x-model="studentForm.phone" placeholder="9689XXXXXXX" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 dir-ltr text-right">
                     </div>
                     <div>
-                        <label class="block font-semibold mb-1">رقم الهاتف</label>
-                        <input type="text" x-model="studentForm.phone" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500 dir-ltr text-right">
+                        <label class="block font-semibold mb-1">حالة عينة التدقيق</label>
+                        <select x-model="studentForm.auditStatus" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
+                            <option value="عينة تدقيق اعتمدت">عينة تدقيق اعتمدت</option>
+                            <option value="قيد التدقيق">قيد التدقيق</option>
+                            <option value="لم تحدد كعينة">لم تحدد كعينة</option>
+                        </select>
                     </div>
                 </div>
 
@@ -598,7 +718,7 @@
                 </div>
 
                 <div>
-                    <label class="block font-semibold mb-1">ملاحظات لجنة التدقيق</label>
+                    <label class="block font-semibold mb-1">الملاحظات الخاصة</label>
                     <textarea x-model="studentForm.notes" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
 
@@ -620,7 +740,7 @@
 
     <!-- Document Modal -->
     <div x-show="showDocModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" x-cloak x-transition>
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
             <div class="flex items-center justify-between mb-4 border-b pb-3">
                 <h3 class="text-base font-bold text-slate-800">إضافة وثيقة مرجعية</h3>
                 <button @click="showDocModal = false" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -633,10 +753,10 @@
                 </div>
                 <div>
                     <label class="block font-semibold mb-1">التصنيف</label>
-                    <input type="text" x-model="docForm.category" placeholder="خطط فصيلة / وثائق تقويم" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
+                    <input type="text" x-model="docForm.category" placeholder="وثائق رسمية / خطط فصلية" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
                 </div>
                 <div>
-                    <label class="block font-semibold mb-1">تاريخ الاعتماد</label>
+                    <label class="block font-semibold mb-1">تاريخ الاعتماد والرفع</label>
                     <input type="date" x-model="docForm.date" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
                 </div>
                 <div>
@@ -657,7 +777,7 @@
 
     <!-- Assessment Modal -->
     <div x-show="showAssessmentModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" x-cloak x-transition>
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
+        <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-100">
             <div class="flex items-center justify-between mb-4 border-b pb-3">
                 <h3 class="text-base font-bold text-slate-800">إضافة أداة تقويم جديدة</h3>
                 <button @click="showAssessmentModal = false" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -684,6 +804,10 @@
                     </div>
                 </div>
                 <div>
+                    <label class="block font-semibold mb-1">تاريخ الرفع</label>
+                    <input type="date" x-model="assessmentForm.date" required class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div>
                     <label class="block font-semibold mb-1">ملاحظات ونموذج الإجابة</label>
                     <textarea x-model="assessmentForm.description" rows="2" class="w-full px-3 py-2 border rounded-xl focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
@@ -701,8 +825,8 @@
 
     <!-- Custom Delete Confirmation Modal -->
     <div x-show="confirmModal.show" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4" x-cloak x-transition>
-        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-2xl">
-            <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3 text-xl">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
+            <div class="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto mb-3 text-xl">
                 <i class="fa-solid fa-trash-can"></i>
             </div>
             <h3 class="text-base font-bold text-slate-800 mb-1" x-text="confirmModal.title"></h3>
@@ -724,7 +848,7 @@
         <span x-text="toast.message"></span>
     </div>
 
-    <!-- Alpine.js Master Application Controller -->
+    <!-- Alpine.js Application Script -->
     <script>
         function auditApp() {
             return {
@@ -733,57 +857,123 @@
                 uploadingFile: false,
                 searchQuery: '',
                 filterSection: '',
+                filterStatus: '',
                 filterLevel: '',
                 chartInstance: null,
 
-                // Main Data Arrays
-                documents: [],
-                assessments: [],
-                students: [],
+                // Preview Modal State
+                previewModal: { show: false, url: '', title: '' },
 
-                // Modals State
+                // Default Documents (مطابقة تماماً للصورة المرفقة)
+                documents: [
+                    {
+                        id: 1,
+                        title: 'وثيقة تقويم تعلم الطلاب - الصف الثاني عشر',
+                        category: 'وثائق رسمية',
+                        date: '2026-09-01',
+                        description: 'الوثيقة المعتمدة المحدثة للعام الدراسي.',
+                        fileUrl: ''
+                    }
+                ],
+                assessments: [
+                    {
+                        id: 1,
+                        title: 'الاختبار القصير الأول - الفصل الأول',
+                        type: 'اختبار قصير',
+                        maxScore: 15,
+                        date: '2026-09-01',
+                        description: 'نموذج الأسئلة متبوعاً بسلم تصحيح المهارات الإشعاعية والتطبيقات.',
+                        fileName: 'test_1.pdf',
+                        fileUrl: ''
+                    }
+                ],
+                students: [
+                    {
+                        id: 1,
+                        name: 'أحمد بن محمد البوسعيدي',
+                        seatNumber: '120401',
+                        civilId: '120401',
+                        section: '12/1',
+                        phone: '96899112233',
+                        level: 'high',
+                        auditStatus: 'عينة تدقيق اعتمدت',
+                        notes: 'طالب متميز - عينة المستوى العالي',
+                        score: '98',
+                        fileUrl: ''
+                    },
+                    {
+                        id: 2,
+                        name: 'سالم بن عبد الله المعمري',
+                        seatNumber: '120415',
+                        civilId: '120415',
+                        section: '12/1',
+                        phone: '96892334455',
+                        level: 'medium',
+                        auditStatus: 'عينة تدقيق اعتمدت',
+                        notes: 'عينة المستوى المتوسط',
+                        score: '82',
+                        fileUrl: ''
+                    },
+                    {
+                        id: 3,
+                        name: 'فهد بن خليل الزدجالي',
+                        seatNumber: '120428',
+                        civilId: '120428',
+                        section: '12/2',
+                        phone: '96895667788',
+                        level: 'low',
+                        auditStatus: 'عينة تدقيق اعتمدت',
+                        notes: 'عينة دون المتوسط مع خطة علاجية',
+                        score: '64',
+                        fileUrl: ''
+                    }
+                ],
+
+                // Modals & Confirmation States
                 showStudentModal: false,
                 editingStudent: null,
-                studentForm: { id: null, name: '', seatNumber: '', civilId: '', section: '', phone: '', level: 'high', score: '', notes: '', fileUrl: '' },
+                studentForm: { id: null, name: '', seatNumber: '', section: '12/1', phone: '', auditStatus: 'عينة تدقيق اعتمدت', level: 'high', score: '', notes: '', fileUrl: '' },
 
                 showDocModal: false,
-                docForm: { id: null, title: '', category: '', date: '', description: '', fileUrl: '' },
+                docForm: { id: null, title: '', category: 'وثائق رسمية', date: '2026-09-01', description: '', fileUrl: '' },
 
                 showAssessmentModal: false,
-                assessmentForm: { id: null, title: '', type: 'اختبار قصير', maxScore: 15, description: '', fileName: '', fileUrl: '' },
+                assessmentForm: { id: null, title: '', type: 'اختبار قصير', maxScore: 15, date: '2026-09-01', description: '', fileName: '', fileUrl: '' },
 
                 confirmModal: { show: false, title: '', message: '', action: null },
                 toast: { show: false, message: '', type: 'success' },
 
-                // Initialization
                 init() {
                     this.syncDataFromGitHub();
                 },
 
-                // 1. GET: Fetch JSON Data via Vercel Cloud Proxy (/api/sync)
+                openPreview(url, title) {
+                    this.previewModal = {
+                        show: true,
+                        url: url || '',
+                        title: title || 'معاينة المستند'
+                    };
+                },
+
                 async syncDataFromGitHub() {
                     this.isSyncing = true;
                     try {
                         const response = await fetch('/api/sync');
                         if (response.ok) {
                             const data = await response.json();
-                            this.documents = data.documents || [];
-                            this.assessments = data.assessments || [];
-                            this.students = data.students || [];
+                            if (data.documents && data.documents.length) this.documents = data.documents;
+                            if (data.assessments && data.assessments.length) this.assessments = data.assessments;
+                            if (data.students && data.students.length) this.students = data.students;
                             this.showToast('تمت المزامنة بنجاح من السحابة');
-                        } else {
-                            this.showToast('تأكد من ضبط Environment Variables بـ Vercel', 'warning');
                         }
                     } catch (e) {
                         console.error(e);
-                        this.showToast('تعذر الاتصال بالدالة السحابية', 'warning');
                     } finally {
                         this.isSyncing = false;
                         this.$nextTick(() => this.renderChart());
                     }
                 },
 
-                // 2. POST: Save Complete JSON State to GitHub Repository
                 async saveDataToGitHub() {
                     this.isSyncing = true;
                     const contentObj = {
@@ -793,8 +983,6 @@
                     };
 
                     const jsonString = JSON.stringify(contentObj, null, 2);
-                    
-                    // Safe UTF-8 Base64 Encoder
                     const bytes = new TextEncoder().encode(jsonString);
                     let binaryStr = '';
                     for (let i = 0; i < bytes.byteLength; i++) {
@@ -809,29 +997,26 @@
                             body: JSON.stringify({
                                 path: 'data.json',
                                 content: base64Content,
-                                message: 'تحديث بيانات المنصة الرقمية'
+                                message: 'تحديث المرفقات والمعاينات'
                             })
                         });
 
                         if (response.ok) {
-                            this.showToast('تم حفظ كافة البيانات على السحابة بنجاح!');
-                        } else {
-                            this.showToast('فشل التحديث على GitHub', 'warning');
+                            this.showToast('تم حفظ الحالات المحدثة على السحابة بنجاح!');
                         }
                     } catch (e) {
-                        this.showToast('خطأ في شبكة الاتصال بالحفظ', 'warning');
+                        this.showToast('خطأ في الاتصال بالحفظ', 'warning');
                     } finally {
                         this.isSyncing = false;
                     }
                 },
 
-                // 3. Upload File to uploads/ folder via Base64 POST
                 async handleFileUpload(event, type) {
                     const file = event.target.files[0];
                     if (!file) return;
 
                     this.uploadingFile = true;
-                    this.showToast('جاري رفع الملف إلى السحابة...');
+                    this.showToast('جاري رفع المستند...');
 
                     const reader = new FileReader();
                     reader.onload = async (e) => {
@@ -861,12 +1046,10 @@
                                     this.assessmentForm.fileName = file.name;
                                 }
 
-                                this.showToast('تم رفع وتوثيق الملف المرفق بنجاح');
-                            } else {
-                                this.showToast('فشل رفع الملف إلى GitHub', 'warning');
+                                this.showToast('تم رفع وتوثيق المستند بنجاح');
                             }
                         } catch (err) {
-                            this.showToast('خطأ أثناء عملية الرفع السحابية', 'warning');
+                            this.showToast('خطأ أثناء عملية الرفع', 'warning');
                         } finally {
                             this.uploadingFile = false;
                         }
@@ -874,7 +1057,6 @@
                     reader.readAsDataURL(file);
                 },
 
-                // Render Statistics Doughnut Chart
                 renderChart() {
                     const ctx = document.getElementById('levelChart');
                     if (!ctx) return;
@@ -907,16 +1089,21 @@
                     });
                 },
 
-                // Compute Helper Properties
                 get uniqueSections() {
                     return [...new Set(this.students.map(s => s.section))].filter(Boolean);
                 },
 
                 get filteredStudents() {
                     return this.students.filter(s => {
-                        const matchesSearch = s.name.includes(this.searchQuery) || s.seatNumber.includes(this.searchQuery);
+                        const query = this.searchQuery.toLowerCase();
+                        const matchesSearch = (s.name && s.name.toLowerCase().includes(query)) || 
+                                             (s.seatNumber && s.seatNumber.includes(query)) || 
+                                             (s.phone && s.phone.includes(query));
+                        
                         const matchesSection = this.filterSection === '' || s.section === this.filterSection;
-                        return matchesSearch && matchesSection;
+                        const matchesStatus = this.filterStatus === '' || (s.auditStatus || 'عينة تدقيق اعتمدت') === this.filterStatus;
+                        
+                        return matchesSearch && matchesSection && matchesStatus;
                     });
                 },
 
@@ -930,10 +1117,9 @@
                     return this.students.filter(s => s.level === level).length;
                 },
 
-                // Student Operations
                 openAddStudentModal() {
                     this.editingStudent = null;
-                    this.studentForm = { id: Date.now(), name: '', seatNumber: '', civilId: '', section: '12 / 1', phone: '', level: 'high', score: '', notes: '', fileUrl: '' };
+                    this.studentForm = { id: Date.now(), name: '', seatNumber: '', section: '12/1', phone: '', auditStatus: 'عينة تدقيق اعتمدت', level: 'high', score: '', notes: '', fileUrl: '' };
                     this.showStudentModal = true;
                 },
 
@@ -958,8 +1144,8 @@
                 confirmDeleteStudent(id) {
                     this.confirmModal = {
                         show: true,
-                        title: 'حذف طالب',
-                        message: 'هل أنت تأكد من رغبتك في حذف بيانات هذا الطالب من السجل؟',
+                        title: 'حذف طالب / عينة',
+                        message: 'هل أنت تأكد من رغبتك في حذف بيانات هذا الطالب ومرفقاته؟',
                         action: () => {
                             this.students = this.students.filter(s => s.id !== id);
                             this.renderChart();
@@ -968,9 +1154,8 @@
                     };
                 },
 
-                // Document Operations
                 openAddDocModal() {
-                    this.docForm = { id: Date.now(), title: '', category: 'خطط دراسية', date: new Date().toISOString().split('T')[0], description: '', fileUrl: '' };
+                    this.docForm = { id: Date.now(), title: '', category: 'وثائق رسمية', date: '2026-09-01', description: '', fileUrl: '' };
                     this.showDocModal = true;
                 },
 
@@ -992,9 +1177,8 @@
                     };
                 },
 
-                // Assessment Operations
                 openAddAssessmentModal() {
-                    this.assessmentForm = { id: Date.now(), title: '', type: 'اختبار قصير', maxScore: 15, description: '', fileName: '', fileUrl: '' };
+                    this.assessmentForm = { id: Date.now(), title: '', type: 'اختبار قصير', maxScore: 15, date: '2026-09-01', description: '', fileName: '', fileUrl: '' };
                     this.showAssessmentModal = true;
                 },
 
