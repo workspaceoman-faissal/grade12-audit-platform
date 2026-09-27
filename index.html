@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة التدقيق الرقمي والمتابعة السحابية المتقدمة</title>
+    <title>منصة التدقيق الرقمي والمتابعة السحابية - الصف الثاني عشر</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Alpine.js -->
@@ -53,7 +53,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col" x-data="teacherPlatform()">
 
-    <!-- Notification Toast -->
+    <!-- Toast Notification System -->
     <div x-cloak x-show="toast.show" 
          x-transition:enter="transition ease-out duration-300 transform"
          x-transition:enter-start="opacity-0 translate-y-2"
@@ -67,11 +67,12 @@
         <span class="font-bold text-sm" x-text="toast.message"></span>
     </div>
 
-    <!-- Main Navigation Header -->
+    <!-- Main Header -->
     <header class="bg-slate-900 text-white shadow-xl border-b border-slate-800 sticky top-0 z-30 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 
+                <!-- Title & Brand -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center space-x-3 space-x-reverse">
                         <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-brand-600 to-cyan-500 flex items-center justify-center shadow-lg shadow-brand-500/30">
@@ -79,20 +80,21 @@
                         </div>
                         <div>
                             <div class="flex items-center gap-2">
-                                <h1 class="text-lg sm:text-xl font-black tracking-tight">منصة التدقيق الرقمي والمتابعة السحابية</h1>
-                                <span class="bg-brand-500/20 text-brand-300 border border-brand-500/30 text-[11px] px-2.5 py-0.5 rounded-full font-bold">الإصدار الرقمي</span>
+                                <h1 class="text-lg sm:text-xl font-black tracking-tight" x-text="platformSettings.title || 'منصة التدقيق الرقمي والمتابعة السحابية'"></h1>
+                                <span class="bg-brand-500/20 text-brand-300 border border-brand-500/30 text-[11px] px-2.5 py-0.5 rounded-full font-bold" x-text="platformSettings.grade || 'الصف 12'"></span>
                             </div>
-                            <p class="text-xs text-slate-400 mt-0.5">نظام إدارة العينات وتوثيق أدوات التقويم والمزامنة مع GitHub</p>
+                            <p class="text-xs text-slate-400 mt-0.5">مربوطة سحابياً بمستودع GitHub | العام الدراسي 2026/2027</p>
                         </div>
                     </div>
 
+                    <!-- GitHub Sync Quick Button Mobile -->
                     <button @click="showGithubModal = true" class="lg:hidden bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3 py-1.5 rounded-xl flex items-center gap-2 font-bold">
                         <i class="fa-brands fa-github text-base" :class="github.isConfigured ? 'text-emerald-400' : 'text-amber-400'"></i>
                         <span x-text="github.isConfigured ? 'متصل' : 'إعداد الربط'"></span>
                     </button>
                 </div>
 
-                <!-- Navigation Tabs -->
+                <!-- Navigation Tabs (5 Main Sections) & Sync Button -->
                 <div class="flex flex-col sm:flex-row sm:items-center gap-3">
                     <nav class="flex items-center bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700/60 overflow-x-auto space-x-1 space-x-reverse">
                         <button @click="switchTab('dashboard')" 
@@ -132,6 +134,7 @@
                         </button>
                     </nav>
 
+                    <!-- Desktop GitHub Status Button -->
                     <button @click="showGithubModal = true" class="hidden lg:flex bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs px-3.5 py-2 rounded-2xl items-center gap-2 font-bold transition">
                         <i class="fa-brands fa-github text-lg" :class="github.isConfigured ? 'text-emerald-400' : 'text-amber-400'"></i>
                         <div class="text-right">
@@ -147,8 +150,9 @@
 
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- TAB 1: DASHBOARD -->
+        <!-- ================= TAB 1: DASHBOARD & GITHUB STATS ================= -->
         <div x-show="activeTab === 'dashboard'" x-cloak class="space-y-6">
+            <!-- Top Metric Indicator Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition">
                     <div class="flex items-center justify-between">
@@ -199,14 +203,15 @@
                 </div>
             </div>
 
+            <!-- GitHub Cloud Sync Banner -->
             <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-md border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div class="space-y-1">
                     <div class="flex items-center gap-2">
                         <i class="fa-brands fa-github text-2xl text-brand-400"></i>
-                        <h3 class="text-lg font-bold">المزامنة السحابية المباشرة مع GitHub</h3>
+                        <h3 class="text-lg font-bold">المزامنة السحابية المباشرة مع مستودع GitHub</h3>
                     </div>
                     <p class="text-xs text-slate-300 leading-relaxed max-w-2xl">
-                        تُحفظ البيانات تلقائياً في ملف <code class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">data.json</code> مع رفع المستندات إلى مجلد <code class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">uploads/</code> بالمستودع.
+                        تُحفظ كافة ملفات البيانات والدرجات في ملف <code class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">data.json</code> وترفع الملفات المرفقة تلقائياً لمجلد <code class="bg-slate-800 px-2 py-0.5 rounded text-amber-300 font-mono">uploads/</code> بمستودعك.
                     </p>
                 </div>
                 <div class="flex items-center gap-3">
@@ -221,75 +226,91 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Chart: Level Distribution -->
                 <div class="lg:col-span-2 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-lg font-extrabold text-slate-800 flex items-center gap-2">
                             <i class="fa-solid fa-chart-pie text-brand-600"></i>
-                            توزيع مستويات عينات الأعمال
+                            تصنيف مستويات عينات التدقيق المعتمدة
                         </h3>
-                        <span class="text-xs font-bold text-slate-400">تحديث فوري</span>
+                        <span class="text-xs font-bold text-slate-400">محدث فوراً</span>
                     </div>
                     <div class="h-64 relative">
                         <canvas id="levelChart"></canvas>
                     </div>
                 </div>
 
+                <!-- Teacher Actions & Direct Shortcuts -->
                 <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col justify-between space-y-4">
                     <div>
                         <h3 class="text-lg font-extrabold text-slate-800 mb-2 flex items-center gap-2">
                             <i class="fa-solid fa-bolt text-amber-500"></i>
-                            إجراءات سريعة
+                            إجراءات سريعة للمعلم
                         </h3>
-                        <p class="text-xs text-slate-500 leading-relaxed mb-4">اختصارات مباشرة للتحكم بالسجلات وإضافة البيانات.</p>
+                        <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                            تحكم سريع بكافة أدوات المنصة، مع رفع وحفظ مستندات وأعمال الطلاب تلقائياً.
+                        </p>
 
                         <div class="space-y-2.5">
                             <button @click="openAddRosterModal()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs transition shadow-md shadow-brand-600/20">
-                                <i class="fa-solid fa-user-plus"></i> تسجيل طالب جديد
+                                <i class="fa-solid fa-user-plus"></i>
+                                تسجيل طالب جديد في السجل
                             </button>
+
                             <button @click="openAddSampleModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs transition shadow-md">
-                                <i class="fa-solid fa-cloud-arrow-up"></i> رفع أعمال ونماذج طالب
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                رفع أعمال ونماذج طالب
                             </button>
+
                             <button @click="showDocModal = true" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs transition">
-                                <i class="fa-solid fa-file-circle-plus"></i> إرفاق وثيقة مرجعية
+                                <i class="fa-solid fa-file-circle-plus"></i>
+                                إرفاق وثيقة مرجعية / سجل
                             </button>
+
                             <button @click="showAssessmentModal = true" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-xl flex items-center justify-center gap-2 text-xs transition">
-                                <i class="fa-solid fa-clipboard-question"></i> إضافة أداة تقويم
+                                <i class="fa-solid fa-clipboard-question"></i>
+                                إضافة أداة تقويم / Rubric
                             </button>
                         </div>
                     </div>
+
                     <div class="pt-4 border-t border-slate-100 text-center">
-                        <span class="text-[11px] text-slate-400 font-semibold block" x-text="github.isConfigured ? 'مربوط بـ: ' + github.username + '/' + github.repo : 'تخزين محلي مؤقت'"></span>
+                        <span class="text-[11px] text-slate-400 font-semibold block" x-text="github.isConfigured ? 'مربوط بـ GitHub: ' + github.username + '/' + github.repo : 'ملاحظة: يمكنك حفظ البيانات محلياً أو ربطها مع GitHub'"></span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 2: STUDENT ROSTER -->
+        <!-- ================= TAB 2: STUDENT ROSTER ================= -->
         <div x-show="activeTab === 'roster'" x-cloak class="space-y-6">
+            <!-- Header & Action controls -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <div class="flex items-center gap-2">
-                            <h2 class="text-xl font-extrabold text-slate-800">سجل أسماء الطلاب الشامل</h2>
+                            <h2 class="text-xl font-extrabold text-slate-800">سجل أسماء الطلاب وبياناتهم الشامل</h2>
                             <span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-0.5 rounded-full font-bold">سجل الفصل</span>
                         </div>
-                        <p class="text-xs text-slate-500 mt-1">إدارة بيانات الطلاب، تحديد عينات التدقيق، وتوثيق التواصل.</p>
+                        <p class="text-xs text-slate-500 mt-1">إدارة شاملة لأسماء طلاب الصف الثاني عشر، الشعب، تحديد عينات التدقيق، والتواصل مع أولياء الأمور.</p>
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap">
                         <button @click="printRosterReport()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 text-xs transition">
-                            <i class="fa-solid fa-print"></i> طباعة الكشف
+                            <i class="fa-solid fa-print"></i>
+                            طباعة الكشف
                         </button>
                         <button @click="openAddRosterModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 text-xs transition shadow-md shadow-brand-600/20">
-                            <i class="fa-solid fa-user-plus"></i> إضافة طالب جديد
+                            <i class="fa-solid fa-user-plus"></i>
+                            إضافة طالب جديد
                         </button>
                     </div>
                 </div>
 
+                <!-- Filters & Search Bar -->
                 <div class="pt-4 border-t border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="relative">
                         <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-xs"></i>
-                        <input type="text" x-model="rosterSearch" placeholder="بحث بالاسم، الرقم المدني، أو الهاتف..." class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl pr-9 pl-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" x-model="rosterSearch" placeholder="بحث بالاسم، رقم الجلوس، أو الهاتف..." class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl pr-9 pl-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
 
                     <div>
@@ -304,26 +325,27 @@
 
                     <div>
                         <select x-model="rosterSampleFilter" class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 font-semibold">
-                            <option value="all">جميع الحالات</option>
-                            <option value="selected">محدد كـ (عينة تدقيق)</option>
-                            <option value="not_selected">غير محدد</option>
+                            <option value="all">جميع الحالات (محددة وغير محددة)</option>
+                            <option value="selected">محدد كـ (عينة تدقيق للجنة)</option>
+                            <option value="not_selected">غير محدد كـ (عينة تدقيق)</option>
                         </select>
                     </div>
                 </div>
             </div>
 
+            <!-- Students Roster Table -->
             <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right border-collapse">
                         <thead>
                             <tr class="bg-slate-800 text-white text-xs font-black">
                                 <th class="p-3.5 pr-5">#</th>
-                                <th class="p-3.5">اسم الطالب</th>
-                                <th class="p-3.5">الرقم المدني / الجلوس</th>
-                                <th class="p-3.5">الشعبة</th>
-                                <th class="p-3.5">حالة التدقيق</th>
+                                <th class="p-3.5">الاسم الرباعي للطالب</th>
+                                <th class="p-3.5">رقم الجلوس / المدني</th>
+                                <th class="p-3.5">الصف / الشعبة</th>
+                                <th class="p-3.5">حالة عينة التدقيق</th>
                                 <th class="p-3.5">هاتف ولي الأمر</th>
-                                <th class="p-3.5">الملاحظات</th>
+                                <th class="p-3.5">الملاحظات الخاصة</th>
                                 <th class="p-3.5 pl-5 text-center">الإجراءات</th>
                             </tr>
                         </thead>
@@ -341,29 +363,33 @@
                                                 :class="st.sampleStatus === 'selected' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200'"
                                                 class="px-2.5 py-1 rounded-lg border text-[11px] font-extrabold transition flex items-center gap-1.5">
                                             <i :class="st.sampleStatus === 'selected' ? 'fa-check-circle text-emerald-600' : 'fa-circle-dot text-slate-400'" class="fa-solid"></i>
-                                            <span x-text="st.sampleStatus === 'selected' ? 'عينة اعتُمدت' : 'غير محدد'"></span>
+                                            <span x-text="st.sampleStatus === 'selected' ? 'عينة تدقيق اعتُمدت' : 'غير محدد'"></span>
                                         </button>
                                     </td>
                                     <td class="p-3.5 font-mono dir-ltr text-right text-slate-600" x-text="st.phone || 'غير مسجل'"></td>
                                     <td class="p-3.5 text-slate-500 max-w-xs truncate" x-text="st.notes || 'لا يوجد'"></td>
                                     <td class="p-3.5 pl-5">
                                         <div class="flex items-center justify-center gap-2">
-                                            <button @click="linkToUploadSample(st)" title="رفع أعمال" class="text-brand-600 hover:text-brand-800 bg-brand-50 p-2 rounded-lg transition">
+                                            <button @click="linkToUploadSample(st)" title="رفع أعمال الطالب" class="text-brand-600 hover:text-brand-800 bg-brand-50 p-2 rounded-lg font-bold transition">
                                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                             </button>
-                                            <button @click="openEditRosterModal(st)" title="تعديل" class="text-amber-600 hover:text-amber-800 bg-amber-50 p-2 rounded-lg transition">
+                                            <button @click="openEditRosterModal(st)" title="تعديل البيانات" class="text-amber-600 hover:text-amber-800 bg-amber-50 p-2 rounded-lg font-bold transition">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
-                                            <button @click="deleteRosterStudent(st.id)" title="حذف" class="text-rose-600 hover:text-rose-800 bg-rose-50 p-2 rounded-lg transition">
+                                            <button @click="deleteRosterStudent(st.id)" title="حذف الطالب" class="text-rose-600 hover:text-rose-800 bg-rose-50 p-2 rounded-lg font-bold transition">
                                                 <i class="fa-solid fa-trash"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
                             </template>
+
                             <template x-if="filteredRoster.length === 0">
                                 <tr>
-                                    <td colspan="8" class="p-8 text-center text-slate-400 font-bold">لا يوجد طلاب مطابقون للبحث.</td>
+                                    <td colspan="8" class="p-8 text-center text-slate-400 font-bold">
+                                        <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i>
+                                        لا يوجد طلاب مطابقون لشروط البحث في السجل حالياً.
+                                    </td>
                                 </tr>
                             </template>
                         </tbody>
@@ -372,18 +398,20 @@
             </div>
         </div>
 
-        <!-- TAB 3: DOCUMENTS -->
+        <!-- ================= TAB 3: REFERENCE DOCUMENTS ================= -->
         <div x-show="activeTab === 'docs'" x-cloak class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
                 <div>
                     <h2 class="text-xl font-extrabold text-slate-800">الوثائق المرجعية وسجلات الدرجات</h2>
-                    <p class="text-xs text-slate-500 mt-1">تتضمن خطط المادة، وثائق تقويم التعلم الرسمية، والكشوفات.</p>
+                    <p class="text-xs text-slate-500 mt-1">تتضمن وثيقة تقويم تعلم الطلاب، الخطة الفصلية، وكشوفات الدرجات الرسمية المعتمدة.</p>
                 </div>
                 <button @click="showDocModal = true" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 text-xs transition shadow-md">
-                    <i class="fa-solid fa-plus"></i> إضافة وثيقة جديدة
+                    <i class="fa-solid fa-plus"></i>
+                    إضافة وثيقة جديدة
                 </button>
             </div>
 
+            <!-- Documents Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <template x-for="doc in documents" :key="doc.id">
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between">
@@ -397,11 +425,16 @@
                             <h3 class="font-extrabold text-slate-800 text-base leading-snug mb-2" x-text="doc.title"></h3>
                             <p class="text-xs text-slate-500 leading-relaxed mb-4" x-text="doc.description"></p>
                         </div>
+
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-                            <span x-text="'التاريخ: ' + doc.date"></span>
+                            <span x-text="'تاريخ الرفع: ' + doc.date"></span>
                             <div class="flex items-center gap-2">
-                                <button @click="viewDocument(doc, 'doc')" class="text-brand-600 font-bold p-1"><i class="fa-solid fa-eye ml-1"></i>معاينة</button>
-                                <button @click="deleteDoc(doc.id)" class="text-rose-500 font-bold p-1"><i class="fa-solid fa-trash"></i></button>
+                                <button @click="viewDocument(doc, 'doc')" class="text-brand-600 hover:text-brand-800 font-bold p-1">
+                                    <i class="fa-solid fa-eye ml-1"></i>معاينة
+                                </button>
+                                <button @click="deleteDoc(doc.id)" class="text-rose-500 hover:text-rose-700 font-bold p-1">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -409,18 +442,20 @@
             </div>
         </div>
 
-        <!-- TAB 4: ASSESSMENTS -->
+        <!-- ================= TAB 4: ASSESSMENTS ================= -->
         <div x-show="activeTab === 'assessments'" x-cloak class="space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
                 <div>
                     <h2 class="text-xl font-extrabold text-slate-800">أدوات التقويم ونماذج الإجابة</h2>
-                    <p class="text-xs text-slate-500 mt-1">تشمل أوراق الاختبارات، المشاريع، وسلالم التقدير (Rubrics).</p>
+                    <p class="text-xs text-slate-500 mt-1">تشمل أوراق الاختبارات القصيرة، الأنشطة، نماذج الإجابة وسلالم التقدير (Rubrics).</p>
                 </div>
                 <button @click="showAssessmentModal = true" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-4 rounded-xl flex items-center gap-2 text-xs transition shadow-md">
-                    <i class="fa-solid fa-plus"></i> إضافة أداة تقويم
+                    <i class="fa-solid fa-plus"></i>
+                    إضافة أداة تقويم
                 </button>
             </div>
 
+            <!-- Assessments Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <template x-for="item in assessments" :key="item.id">
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between">
@@ -432,11 +467,16 @@
                             <h3 class="font-extrabold text-slate-800 text-base mb-2" x-text="item.title"></h3>
                             <p class="text-xs text-slate-500 leading-relaxed mb-4" x-text="item.description"></p>
                         </div>
+
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs">
-                            <span class="text-slate-400 truncate max-w-[150px]" x-text="item.fileName || 'مرفق.pdf'"></span>
+                            <span class="text-slate-400 truncate max-w-[150px]" x-text="item.fileName || 'ملف المرفق.pdf'"></span>
                             <div class="flex items-center gap-2">
-                                <button @click="viewDocument(item, 'assessment')" class="text-brand-600 font-bold p-1"><i class="fa-solid fa-eye ml-1"></i>معاينة</button>
-                                <button @click="deleteAssessment(item.id)" class="text-rose-500 font-bold p-1"><i class="fa-solid fa-trash"></i></button>
+                                <button @click="viewDocument(item, 'assessment')" class="text-brand-600 hover:text-brand-800 font-bold p-1">
+                                    <i class="fa-solid fa-eye ml-1"></i>معاينة
+                                </button>
+                                <button @click="deleteAssessment(item.id)" class="text-rose-500 hover:text-rose-700 font-bold p-1">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -444,34 +484,53 @@
             </div>
         </div>
 
-        <!-- TAB 5: STUDENT WORK SAMPLES -->
+        <!-- ================= TAB 5: STUDENT WORK SAMPLES ================= -->
         <div x-show="activeTab === 'samples'" x-cloak class="space-y-6">
+            <!-- Filter and Action Bar -->
             <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm space-y-4">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div>
                         <h2 class="text-xl font-extrabold text-slate-800">عينات أعمال الطلاب المرفوعة</h2>
-                        <p class="text-xs text-slate-500 mt-1">إدارة وتحليل عينات أعمال الطلاب عبر المستويات الثلاثة.</p>
+                        <p class="text-xs text-slate-500 mt-1">عرض وإدارة جميع ملفات أعمال وإنجازات الطلاب المصنفة حسب المستويات الثلاثة.</p>
                     </div>
-                    <button @click="openAddSampleModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-5 rounded-xl flex items-center gap-2 text-xs transition shadow-md">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> رفع أعمال طالب
+                    <button @click="openAddSampleModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-5 rounded-xl flex items-center justify-center gap-2 text-xs transition shadow-md whitespace-nowrap">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        رفع أعمال طالب جديد
                     </button>
                 </div>
 
                 <div class="pt-4 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="flex items-center gap-2 overflow-x-auto pb-1">
-                        <button @click="sampleLevelFilter = 'all'" :class="sampleLevelFilter === 'all' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600'" class="px-3.5 py-1.5 rounded-xl text-xs font-bold">الكل (<span x-text="samples.length"></span>)</button>
-                        <button @click="sampleLevelFilter = 'high'" :class="sampleLevelFilter === 'high' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-700'" class="px-3.5 py-1.5 rounded-xl text-xs font-bold">المستوى العالي (<span x-text="highSamplesCount"></span>)</button>
-                        <button @click="sampleLevelFilter = 'medium'" :class="sampleLevelFilter === 'medium' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700'" class="px-3.5 py-1.5 rounded-xl text-xs font-bold">المستوى المتوسط (<span x-text="mediumSamplesCount"></span>)</button>
-                        <button @click="sampleLevelFilter = 'low'" :class="sampleLevelFilter === 'low' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700'" class="px-3.5 py-1.5 rounded-xl text-xs font-bold">دون المتوسط (<span x-text="lowSamplesCount"></span>)</button>
+                        <button @click="sampleLevelFilter = 'all'" 
+                                :class="sampleLevelFilter === 'all' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'"
+                                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap">
+                            الكل (<span x-text="samples.length"></span>)
+                        </button>
+                        <button @click="sampleLevelFilter = 'high'" 
+                                :class="sampleLevelFilter === 'high' ? 'bg-emerald-600 text-white' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'"
+                                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap">
+                            المستوى العالي (<span x-text="highSamplesCount"></span>)
+                        </button>
+                        <button @click="sampleLevelFilter = 'medium'" 
+                                :class="sampleLevelFilter === 'medium' ? 'bg-amber-600 text-white' : 'bg-amber-50 text-amber-700 hover:bg-amber-100'"
+                                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap">
+                            المستوى المتوسط (<span x-text="mediumSamplesCount"></span>)
+                        </button>
+                        <button @click="sampleLevelFilter = 'low'" 
+                                :class="sampleLevelFilter === 'low' ? 'bg-rose-600 text-white' : 'bg-rose-50 text-rose-700 hover:bg-rose-100'"
+                                class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap">
+                            دون المتوسط (<span x-text="lowSamplesCount"></span>)
+                        </button>
                     </div>
 
                     <div class="relative w-full md:w-72">
                         <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-xs"></i>
-                        <input type="text" x-model="sampleSearch" placeholder="بحث باسم الطالب..." class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl pr-9 pl-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                        <input type="text" x-model="sampleSearch" placeholder="بحث باسم الطالب أو رقم الجلوس..." class="w-full bg-slate-50 border border-slate-200 text-xs rounded-xl pr-9 pl-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
             </div>
 
+            <!-- Samples Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 <template x-for="sample in filteredSamples" :key="sample.id">
                     <div class="bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md transition p-5 flex flex-col justify-between">
@@ -484,15 +543,15 @@
                                 }" class="text-xs font-bold px-3 py-1 rounded-full border">
                                     <span x-text="sample.level === 'high' ? 'مستوى عالٍ' : (sample.level === 'medium' ? 'مستوى متوسط' : 'دون المتوسط')"></span>
                                 </span>
-                                <span class="text-xs font-extrabold text-slate-500" x-text="'الرقم المدني: ' + sample.seatNumber"></span>
+                                <span class="text-xs font-extrabold text-slate-500" x-text="'رقم الجلوس: ' + sample.seatNumber"></span>
                             </div>
 
                             <h3 class="font-extrabold text-slate-800 text-base mb-1" x-text="sample.studentName"></h3>
-                            <p class="text-xs text-brand-600 font-bold mb-3" x-text="'الدرجة: ' + (sample.score || 'غير محددة')"></p>
+                            <p class="text-xs text-brand-600 font-bold mb-3" x-text="'الدرجة المستحقة: ' + (sample.score || 'غير محددة')"></p>
 
                             <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs text-slate-600 leading-relaxed mb-4">
-                                <p class="font-bold text-slate-700 mb-1">التغذية الراجعة والملاحظات:</p>
-                                <span x-text="sample.notes || 'لا توجد ملاحظات.'"></span>
+                                <p class="font-bold text-slate-700 mb-1">تغذية راجعة وملاحظات المعلم:</p>
+                                <span x-text="sample.notes || 'لا توجد ملاحظات مسجلة.'"></span>
                             </div>
 
                             <div class="space-y-1.5 mb-4">
@@ -501,7 +560,9 @@
                                     <template x-for="(file, idx) in sample.files" :key="idx">
                                         <div class="flex items-center justify-between bg-slate-100/70 px-2.5 py-1.5 rounded-lg text-xs">
                                             <span class="truncate font-semibold text-slate-700" x-text="file.name"></span>
-                                            <button @click="viewDocument({ title: file.name, fileUrl: file.url || file.dataUrl, description: 'أعمال: ' + sample.studentName }, 'sample')" class="text-brand-600 font-bold mr-2">عرض</button>
+                                            <button @click="viewDocument({ title: file.name, fileUrl: file.url || file.dataUrl, description: 'أعمال الطالب: ' + sample.studentName }, 'sample')" class="text-brand-600 hover:text-brand-800 font-bold mr-2">
+                                                عرض
+                                            </button>
                                         </div>
                                     </template>
                                 </div>
@@ -509,8 +570,12 @@
                         </div>
 
                         <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
-                            <button @click="openEditSampleModal(sample)" class="text-xs font-bold text-brand-600 flex items-center gap-1"><i class="fa-solid fa-pen-to-square"></i> تعديل</button>
-                            <button @click="deleteSample(sample.id)" class="text-xs font-bold text-rose-500"><i class="fa-solid fa-trash"></i> حذف</button>
+                            <button @click="openEditSampleModal(sample)" class="text-xs font-bold text-brand-600 hover:text-brand-800 flex items-center gap-1">
+                                <i class="fa-solid fa-pen-to-square"></i> تعديل المرفقات
+                            </button>
+                            <button @click="deleteSample(sample.id)" class="text-xs font-bold text-rose-500 hover:text-rose-700">
+                                <i class="fa-solid fa-trash"></i> حذف العينة
+                            </button>
                         </div>
                     </div>
                 </template>
@@ -519,73 +584,84 @@
 
     </main>
 
-    <!-- MODAL 0: GITHUB CONFIG -->
+
+    <!-- MODAL 0: GITHUB CONFIGURATION & SYNC MODAL -->
     <div x-cloak x-show="showGithubModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showGithubModal = false" class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 space-y-5">
             <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div class="flex items-center gap-2">
                     <i class="fa-brands fa-github text-2xl text-slate-800"></i>
-                    <h3 class="text-lg font-black text-slate-800">إعدادات الربط مع GitHub</h3>
+                    <h3 class="text-lg font-black text-slate-800">إعدادات الربط مع مستودع GitHub</h3>
                 </div>
-                <button @click="showGithubModal = false" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button @click="showGithubModal = false" class="text-slate-400 hover:text-slate-600">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
             </div>
 
-            <p class="text-xs text-slate-500 leading-relaxed">أدخل بيانات مستودعك ورمز PAT للمزامنة وحفظ المستندات تلقائياً.</p>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                قم بإدخال بيانات مستودعك ورمز الوصول الشخصي (Personal Access Token - PAT) ليتم حفظ البيانات والملفات تلقائياً على GitHub.
+            </p>
 
             <div class="space-y-3.5 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">اسم المستخدم (GitHub Username)</label>
-                    <input type="text" x-model="github.username" placeholder="اسم المستخدم" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
+                    <label class="block font-bold text-slate-700 mb-1">اسم المستخدم على GitHub (Username / Owner)</label>
+                    <input type="text" x-model="github.username" placeholder="مثال: my-username" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
                 </div>
+
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">اسم المستودع (Repository Name)</label>
-                    <input type="text" x-model="github.repo" placeholder="اسم المستودع" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
+                    <input type="text" x-model="github.repo" placeholder="مثال: grade12-audit-platform" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
                 </div>
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">اسم الفرع (Branch)</label>
                         <input type="text" x-model="github.branch" placeholder="main" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">مجلد المرفقات</label>
+                        <label class="block font-bold text-slate-700 mb-1">مجلد الملفات المرفوعة</label>
                         <input type="text" value="uploads/" disabled class="w-full bg-slate-100 border border-slate-200 text-slate-500 rounded-xl p-2.5 font-mono">
                     </div>
                 </div>
+
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">رمز الوصول (Personal Access Token - PAT)</label>
+                    <label class="block font-bold text-slate-700 mb-1">رمز الوصول الشخصي (Personal Access Token - PAT)</label>
                     <input type="password" x-model="github.token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full border border-slate-200 rounded-xl p-2.5 font-mono focus:ring-2 focus:ring-brand-500">
+                    <span class="text-[10px] text-slate-400 mt-1 block">يتطلب صلاحيات `repo` أو `contents:write`.</span>
                 </div>
             </div>
 
             <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
                 <button @click="testAndSaveGithubSettings()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 px-5 rounded-xl text-xs transition flex items-center gap-2">
-                    <i class="fa-solid fa-plug-circle-check"></i> حفظ واختبار الاتصال
+                    <i class="fa-solid fa-plug-circle-check"></i>
+                    حفظ وإختبار الاتصال بـ GitHub
                 </button>
                 <button @click="showGithubModal = false" class="text-xs font-bold text-slate-500 hover:bg-slate-100 px-3 py-2 rounded-xl">إغلاق</button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 1: ADD/EDIT ROSTER -->
+    <!-- MODAL 1: ADD/EDIT ROSTER STUDENT -->
     <div x-cloak x-show="showRosterModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showRosterModal = false" class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
             <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
                 <i class="fa-solid fa-user-gear text-brand-600"></i>
-                <span x-text="rosterForm.id ? 'تعديل بيانات طالب' : 'إضافة طالب جديد'"></span>
+                <span x-text="rosterForm.id ? 'تعديل بيانات طالب في السجل' : 'إضافة طالب جديد لـ سجل أسماء الطلاب'"></span>
             </h3>
             
             <div class="space-y-4 text-xs">
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">الاسم الرباعي للطالب</label>
-                    <input type="text" x-model="rosterForm.fullName" placeholder="اسم الطالب الكامل" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
+                    <input type="text" x-model="rosterForm.fullName" placeholder="أحمد بن محمد البوسعيدي" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                 </div>
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الرقم المدني / الجلوس</label>
+                        <label class="block font-bold text-slate-700 mb-1">رقم الجلوس / الرقم المدني</label>
                         <input type="text" x-model="rosterForm.seatNumber" placeholder="120401" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الشعبة</label>
+                        <label class="block font-bold text-slate-700 mb-1">الصف / الشعبة</label>
                         <select x-model="rosterForm.classSection" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500 font-semibold">
                             <option value="12/1">12 / 1</option>
                             <option value="12/2">12 / 2</option>
@@ -594,22 +670,24 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">تحديد كـ عينة تدقيق</label>
+                        <label class="block font-bold text-slate-700 mb-1">تحديد كـ عينة تدقيق للجنة</label>
                         <select x-model="rosterForm.sampleStatus" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500 font-semibold">
-                            <option value="selected">نعم (عينة معتمدة)</option>
+                            <option value="selected">نعم (عينة تدقيق)</option>
                             <option value="not_selected">لا (طالب عادي)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">هاتف ولي الأمر</label>
-                        <input type="text" x-model="rosterForm.phone" placeholder="968XXXXXXX" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
+                        <input type="text" x-model="rosterForm.phone" placeholder="9689XXXXXXX" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
+
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">الملاحظات الخاصة</label>
-                    <textarea x-model="rosterForm.notes" rows="2" placeholder="أدخل أي ملاحظات حول حالة الطالب..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
+                    <label class="block font-bold text-slate-700 mb-1">ملاحظات خاصة والمعلومات الإضافية</label>
+                    <textarea x-model="rosterForm.notes" rows="2" placeholder="أدخل أي ملاحظات حول حالة الطالب الدراسية..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
             </div>
 
@@ -620,10 +698,14 @@
         </div>
     </div>
 
-    <!-- MODAL 2: ADD DOC -->
+    <!-- MODAL 2: ADD REFERENCE DOCUMENT -->
     <div x-cloak x-show="showDocModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showDocModal = false" class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
-            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-file-circle-plus text-brand-600"></i> إضافة وثيقة مرجعية</h3>
+            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-file-circle-plus text-brand-600"></i>
+                إضافة وثيقة مرجعية جديدة
+            </h3>
+            
             <div class="space-y-4 text-xs">
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">عنوان الوثيقة / السجل</label>
@@ -642,10 +724,11 @@
                     <textarea x-model="newDoc.description" rows="2" placeholder="ملاحظات مختصرة حول الوثيقة..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">تحميل الملف</label>
-                    <input type="file" @change="handleDocUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700">
+                    <label class="block font-bold text-slate-700 mb-1">تحميل الملف (يرفع مباشرة إلى GitHub)</label>
+                    <input type="file" @change="handleDocUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
                 </div>
             </div>
+
             <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-100">
                 <button @click="showDocModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl">إلغاء</button>
                 <button @click="addDocument()" :disabled="uploadingFile" class="px-5 py-2 text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white rounded-xl shadow-md disabled:opacity-50">
@@ -655,10 +738,14 @@
         </div>
     </div>
 
-    <!-- MODAL 3: ADD ASSESSMENT -->
+    <!-- MODAL 3: ADD ASSESSMENT TOOL -->
     <div x-cloak x-show="showAssessmentModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showAssessmentModal = false" class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100">
-            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-folder-plus text-brand-600"></i> إضافة أداة تقويم</h3>
+            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-folder-plus text-brand-600"></i>
+                إضافة أداة تقويم أو نموذج إجابة
+            </h3>
+            
             <div class="space-y-4 text-xs">
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">عنوان الأداة / الاختبار</label>
@@ -684,10 +771,11 @@
                     <textarea x-model="newAssessment.description" rows="2" placeholder="توضيح سلم التقدير ومعايير الإجابة..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-700 mb-1">مرفق النموذج</label>
-                    <input type="file" @change="handleAssessmentUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700">
+                    <label class="block font-bold text-slate-700 mb-1">مرفق النموذج (يرفع مباشرة إلى GitHub)</label>
+                    <input type="file" @change="handleAssessmentUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
                 </div>
             </div>
+
             <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-100">
                 <button @click="showAssessmentModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl">إلغاء</button>
                 <button @click="addAssessment()" :disabled="uploadingFile" class="px-5 py-2 text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white rounded-xl shadow-md disabled:opacity-50">
@@ -697,21 +785,26 @@
         </div>
     </div>
 
-    <!-- MODAL 4: ADD SAMPLE -->
+    <!-- MODAL 4: ADD/EDIT STUDENT WORK SAMPLE -->
     <div x-cloak x-show="showSampleModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showSampleModal = false" class="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100">
-            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2"><i class="fa-solid fa-cloud-arrow-up text-brand-600"></i> <span x-text="sampleForm.id ? 'تعديل عينة أعمال' : 'رفع عينة أعمال جديدة'"></span></h3>
+            <h3 class="text-lg font-black text-slate-800 mb-4 flex items-center gap-2">
+                <i class="fa-solid fa-cloud-arrow-up text-brand-600"></i>
+                <span x-text="sampleForm.id ? 'تعديل عينة أعمال الطالب' : 'رفع أعمال طالب وإضافتها للعينات'"></span>
+            </h3>
+            
             <div class="space-y-4 text-xs">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">اسم الطالب الرباعي</label>
-                        <input type="text" x-model="sampleForm.studentName" placeholder="اسم الطالب" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
+                        <input type="text" x-model="sampleForm.studentName" placeholder="أحمد بن محمد البوسعيدي" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الرقم المدني / الجلوس</label>
+                        <label class="block font-bold text-slate-700 mb-1">رقم الجلوس / الرقم المدني</label>
                         <input type="text" x-model="sampleForm.seatNumber" placeholder="120401" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-bold text-slate-700 mb-1">المستوى التحصيلي للعينة</label>
@@ -722,37 +815,44 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-700 mb-1">الدرجة النهائية</label>
+                        <label class="block font-bold text-slate-700 mb-1">الدرجة النهائية المستحقة</label>
                         <input type="text" x-model="sampleForm.score" placeholder="مثال: 95 / 100" class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500">
                     </div>
                 </div>
+
                 <div>
                     <label class="block font-bold text-slate-700 mb-1">التغذية الراجعة وملاحظات المعلم</label>
-                    <textarea x-model="sampleForm.notes" rows="3" placeholder="أدخل الملاحظات والتوصيات..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
+                    <textarea x-model="sampleForm.notes" rows="3" placeholder="أدخل الملاحظات والتوصيات العلاجية أو الإثرائية للمعلم..." class="w-full border border-slate-200 rounded-xl p-2.5 focus:ring-2 focus:ring-brand-500"></textarea>
                 </div>
+
                 <div class="border-t border-slate-100 pt-3">
-                    <label class="block font-bold text-slate-700 mb-1">رفع إنجازات الطالب</label>
-                    <input type="file" multiple @change="handleSampleFileUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700">
+                    <label class="block font-bold text-slate-700 mb-1">رفع إنجازات الطالب (تُرخص مباشرة بمجلد uploads/ في GitHub)</label>
+                    <input type="file" multiple @change="handleSampleFileUpload($event)" accept=".pdf,image/*" class="w-full text-slate-500 file:ml-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
+                    
                     <div class="mt-3 space-y-2">
+                        <p class="font-bold text-slate-500">الملفات المرفوقة حالياً:</p>
                         <template x-for="(file, idx) in sampleForm.files" :key="idx">
                             <div class="flex items-center justify-between bg-slate-50 p-2 rounded-xl border border-slate-200">
                                 <span class="truncate font-semibold text-slate-700" x-text="file.name"></span>
-                                <button @click="removeSampleFile(idx)" class="text-rose-500 font-bold px-2"><i class="fa-solid fa-xmark"></i></button>
+                                <button @click="removeSampleFile(idx)" class="text-rose-500 hover:text-rose-700 font-bold px-2">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
                             </div>
                         </template>
                     </div>
                 </div>
             </div>
+
             <div class="flex items-center justify-end gap-3 mt-6 pt-4 border-t border-slate-100">
                 <button @click="showSampleModal = false" class="px-4 py-2 text-xs font-bold text-slate-500 hover:bg-slate-100 rounded-xl">إلغاء</button>
                 <button @click="saveSample()" :disabled="uploadingFile" class="px-5 py-2 text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white rounded-xl shadow-md disabled:opacity-50">
-                    <span x-text="uploadingFile ? 'جاري الرفع...' : 'حفظ أعمال الطالب'"></span>
+                    <span x-text="uploadingFile ? 'جاري الرفع لـ GitHub...' : 'حفظ أعمال الطالب'"></span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- MODAL 5: VIEWER -->
+    <!-- MODAL 5: DOCUMENT / FILE VIEWER -->
     <div x-cloak x-show="showViewModal" class="fixed inset-0 z-50 overflow-y-auto bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4 no-print">
         <div @click.away="showViewModal = false" class="bg-white rounded-2xl max-w-4xl w-full p-6 shadow-2xl border border-slate-100 flex flex-col max-h-[90vh]">
             <div class="flex items-center justify-between border-b border-slate-100 pb-4 mb-4">
@@ -760,31 +860,50 @@
                     <h3 class="text-lg font-black text-slate-800" x-text="viewItem.title"></h3>
                     <p class="text-xs text-slate-500 mt-0.5" x-text="viewItem.description"></p>
                 </div>
-                <button @click="showViewModal = false" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold"><i class="fa-solid fa-xmark"></i></button>
+                <button @click="showViewModal = false" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
+
             <div class="flex-grow overflow-y-auto min-h-[350px] bg-slate-100 rounded-xl p-4 flex items-center justify-center">
                 <template x-if="viewItem.url">
-                    <iframe :src="viewItem.url" class="w-full h-96 rounded-lg border-0"></iframe>
+                    <div class="w-full h-full flex items-center justify-center">
+                        <template x-if="isImage(viewItem.url)">
+                            <img :src="viewItem.url" class="max-h-96 object-contain rounded-lg shadow-md" alt="المستند المرفق">
+                        </template>
+                        <template x-if="!isImage(viewItem.url)">
+                            <iframe :src="viewItem.url" class="w-full h-96 rounded-lg border-0"></iframe>
+                        </template>
+                    </div>
                 </template>
                 <template x-if="!viewItem.url">
                     <div class="text-center p-8 space-y-3">
                         <i class="fa-solid fa-file-pdf text-5xl text-slate-300"></i>
-                        <p class="text-sm font-bold text-slate-600">معاينة المستند</p>
-                        <span class="text-xs text-slate-400 block">الملف محفوظ في مستودع GitHub الخاص بالمنصة.</span>
+                        <p class="text-sm font-bold text-slate-600">معاينة المستند المرفوع سحابياً</p>
+                        <span class="text-xs text-slate-400 block">الملف متوفر داخل مستودع GitHub الخاص بالمنصة.</span>
                     </div>
                 </template>
             </div>
+
             <div class="pt-4 mt-4 border-t border-slate-100 flex justify-end">
                 <button @click="showViewModal = false" class="px-5 py-2 text-xs font-bold bg-slate-800 text-white rounded-xl">إغلاق المعاينة</button>
             </div>
         </div>
     </div>
 
-    <!-- Main Logic -->
+    <!-- Script Logic -->
     <script>
         function teacherPlatform() {
             return {
                 activeTab: 'dashboard',
+
+                // Settings
+                platformSettings: {
+                    title: 'منصة التدقيق الرقمي والمتابعة السحابية',
+                    grade: 'الصف 12'
+                },
+
+                // Modals visibility
                 showGithubModal: false,
                 showRosterModal: false,
                 showDocModal: false,
@@ -794,6 +913,7 @@
 
                 uploadingFile: false,
 
+                // GitHub Integration Config State (Preserved Settings)
                 github: {
                     username: '',
                     repo: '',
@@ -804,6 +924,7 @@
                     lastSha: null
                 },
 
+                // Toast status
                 toast: { show: false, message: '', type: 'success' },
                 showToast(msg, type = 'success') {
                     this.toast.message = msg;
@@ -812,18 +933,21 @@
                     setTimeout(() => { this.toast.show = false; }, 3500);
                 },
 
+                // Filters
                 rosterSearch: '',
                 rosterClassFilter: 'all',
                 rosterSampleFilter: 'all',
                 sampleSearch: '',
                 sampleLevelFilter: 'all',
 
+                // Form States
                 rosterForm: { id: null, fullName: '', seatNumber: '', classSection: '12/1', sampleStatus: 'selected', phone: '', notes: '' },
                 newDoc: { title: '', category: 'وثائق رسمية', description: '', fileData: null, fileName: '' },
                 newAssessment: { title: '', type: 'اختبار قصير', maxScore: 15, description: '', fileData: null, fileName: '' },
                 sampleForm: { id: null, studentName: '', seatNumber: '', level: 'high', score: '', notes: '', files: [] },
                 viewItem: { title: '', type: '', url: '', description: '' },
 
+                // Platform Datasets
                 roster: [],
                 documents: [],
                 assessments: [],
@@ -849,11 +973,14 @@
                     }
                 },
 
+                // GitHub Settings Handlers (Preserving original schema & keys)
                 loadGithubSettings() {
                     const saved = localStorage.getItem('github_config');
                     if (saved) {
-                        this.github = { ...this.github, ...JSON.parse(saved) };
-                        this.github.isConfigured = !!(this.github.username && this.github.repo && this.github.token);
+                        try {
+                            this.github = { ...this.github, ...JSON.parse(saved) };
+                            this.github.isConfigured = !!(this.github.username && this.github.repo && this.github.token);
+                        } catch(e) { console.error('Error loading GitHub config', e); }
                     }
                 },
 
@@ -870,7 +997,7 @@
 
                 async testAndSaveGithubSettings() {
                     if (!this.github.username || !this.github.repo || !this.github.token) {
-                        return alert('يرجى تعبئة جميع بيانات GitHub الأساسية (اسم المستخدم، المستودع، ورمز PAT)');
+                        return alert('يرجى تعبئة جميع بيانات GitHub الأساسية (اسم المستخدم، المستودع، والرمز PAT)');
                     }
                     this.saveGithubSettings();
                     this.showToast('تم حفظ الإعدادات، جاري إختبار المزامنة مع GitHub...');
@@ -878,6 +1005,7 @@
                     this.showGithubModal = false;
                 },
 
+                // UTF-8 Base64 Helpers
                 utf8_to_b64(str) {
                     return window.btoa(unescape(encodeURIComponent(str)));
                 },
@@ -885,6 +1013,7 @@
                     return decodeURIComponent(escape(window.atob(str.replace(/\s/g, ''))));
                 },
 
+                // Sync data.json with GitHub REST API
                 async syncDataFromGithub() {
                     if (!this.github.isConfigured) {
                         this.showToast('لم يتم ربط GitHub بعد. يتم استخدام التخزين المحلي.', 'warning');
@@ -916,6 +1045,7 @@
                             this.updateChart();
                             this.showToast('تمت المزامنة بنجاح من مستودع GitHub');
                         } else if (response.status === 404) {
+                            // First time setup: push current local data to GitHub
                             await this.saveDataToGithub();
                         } else {
                             throw new Error('فشل الاتصال بـ GitHub (' + response.status + ')');
@@ -969,7 +1099,7 @@
                             const resData = await response.json();
                             this.github.lastSha = resData.content.sha;
                             this.saveDataToLocal();
-                            this.showToast('تم حفظ البيانات المحدثة في GitHub بنجاح');
+                            this.showToast('تم حفظ الحالات المحدثة في GitHub بنجاح');
                         } else {
                             const errJson = await response.json();
                             throw new Error(errJson.message || 'خطأ في الحفظ على GitHub');
@@ -981,13 +1111,15 @@
                     }
                 },
 
+                // Upload direct binary files to uploads/ in GitHub Repository
                 async uploadFileToGithub(fileObj) {
-                    if (!this.github.isConfigured) {
-                        return fileObj.dataUrl;
+                    if (!this.github.isConfigured || !fileObj.dataUrl) {
+                        return fileObj.dataUrl || fileObj.url;
                     }
 
                     const cleanFileName = Date.now() + '_' + fileObj.name.replace(/[^a-zA-Z0-9._-]/g, '_');
                     const url = `https://api.github.com/repos/${this.github.username}/${this.github.repo}/contents/uploads/${cleanFileName}`;
+                    
                     const base64Content = fileObj.dataUrl.split(',')[1];
 
                     const body = {
@@ -1014,11 +1146,12 @@
                         }
                     } catch (err) {
                         console.error(err);
-                        this.showToast('تعذر رفع الملف لـ GitHub، تم استخدام النسخة المحلية', 'warning');
+                        this.showToast('تعذر رفع الملف لمستودع GitHub, سيتم استخدام النسخة المحلية', 'warning');
                         return fileObj.dataUrl;
                     }
                 },
 
+                // Local Backup Storage Keys (Maintained exact compatibility)
                 loadDataFromLocal() {
                     const savedRoster = localStorage.getItem('teacher_roster_data');
                     const savedDocs = localStorage.getItem('teacher_docs_data');
@@ -1026,17 +1159,17 @@
                     const savedSamples = localStorage.getItem('teacher_samples_data');
 
                     this.roster = savedRoster ? JSON.parse(savedRoster) : [
-                        { id: 1, fullName: 'أحمد بن محمد البوسعيدي', seatNumber: '120401', classSection: '12/1', sampleStatus: 'selected', phone: '96899112233', notes: 'عينة المستوى العالي' },
+                        { id: 1, fullName: 'أحمد بن محمد البوسعيدي', seatNumber: '120401', classSection: '12/1', sampleStatus: 'selected', phone: '96899112233', notes: 'طالب متميز - عينة المستوى العالي' },
                         { id: 2, fullName: 'سالم بن عبد الله المعمري', seatNumber: '120415', classSection: '12/1', sampleStatus: 'selected', phone: '96892334455', notes: 'عينة المستوى المتوسط' },
-                        { id: 3, fullName: 'فهد بن خليل الزدجالي', seatNumber: '120428', classSection: '12/2', sampleStatus: 'selected', phone: '96895667788', notes: 'عينة دون المتوسط' }
+                        { id: 3, fullName: 'فهد بن خليل الزدجالي', seatNumber: '120428', classSection: '12/2', sampleStatus: 'selected', phone: '96895667788', notes: 'عينة دون المتوسط مع خطة علاجية' }
                     ];
 
                     this.documents = savedDocs ? JSON.parse(savedDocs) : [
-                        { id: 1, title: 'وثيقة تقويم تعلم الطلاب - المحدثة', category: 'وثائق رسمية', date: '2026-09-01', description: 'الوثيقة المعتمدة المحدثة للعام الدراسي.' }
+                        { id: 1, title: 'وثيقة تقويم تعلم الطلاب - الصف الثاني عشر', category: 'وثائق رسمية', date: '2026-09-01', description: 'الوثيقة المعتمدة المحدثة للعام الدراسي.' }
                     ];
 
                     this.assessments = savedAssessments ? JSON.parse(savedAssessments) : [
-                        { id: 1, title: 'الاختبار القصير الأول + نموذج الإجابة', type: 'اختبار قصير', maxScore: 15, fileName: 'Quiz_1_Key.pdf', description: 'أسئلة الاختبار وسلم الدرجات ونموذج الإجابة.' }
+                        { id: 1, title: 'الاختبار القصير الأول + نموذج الإجابة', type: 'اختبار قصير', maxScore: 15, fileName: 'Quiz_1_Key.pdf', description: 'أسئلة الاختبار القصير الأول متبوعة بسلم الدرجات ونموذج الإجابة.' }
                     ];
 
                     this.samples = savedSamples ? JSON.parse(savedSamples) : [];
@@ -1062,8 +1195,8 @@
 
                 get filteredRoster() {
                     return this.roster.filter(st => {
-                        const matchesSearch = st.fullName.includes(this.rosterSearch) || 
-                                              st.seatNumber.includes(this.rosterSearch) || 
+                        const matchesSearch = (st.fullName || '').includes(this.rosterSearch) || 
+                                              (st.seatNumber || '').includes(this.rosterSearch) || 
                                               (st.phone && st.phone.includes(this.rosterSearch));
                         const matchesClass = this.rosterClassFilter === 'all' || st.classSection === this.rosterClassFilter;
                         const matchesSample = this.rosterSampleFilter === 'all' || st.sampleStatus === this.rosterSampleFilter;
@@ -1077,7 +1210,7 @@
 
                 get filteredSamples() {
                     return this.samples.filter(s => {
-                        const matchesSearch = s.studentName.includes(this.sampleSearch) || s.seatNumber.includes(this.sampleSearch);
+                        const matchesSearch = (s.studentName || '').includes(this.sampleSearch) || (s.seatNumber || '').includes(this.sampleSearch);
                         const matchesLevel = this.sampleLevelFilter === 'all' || s.level === this.sampleLevelFilter;
                         return matchesSearch && matchesLevel;
                     });
@@ -1091,7 +1224,7 @@
                     window.myLevelChart = new Chart(ctx, {
                         type: 'doughnut',
                         data: {
-                            labels: ['المستوى العالي', 'المستوى المتوسط', 'دون المتوسط'],
+                            labels: ['المستوى العالي (متميز)', 'المستوى المتوسط', 'المستوى دون المتوسط'],
                             datasets: [{
                                 data: [this.highSamplesCount, this.mediumSamplesCount, this.lowSamplesCount],
                                 backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
@@ -1132,19 +1265,19 @@
 
                 saveRosterStudent() {
                     if (!this.rosterForm.fullName || !this.rosterForm.seatNumber) {
-                        return alert('الرجاء إدخال اسم الطالب ورقم الجلوس/المدني');
+                        return alert('الرجاء إدخال اسم الطالب ورقم الجلوس');
                     }
 
                     if (this.rosterForm.id) {
                         const index = this.roster.findIndex(s => s.id === this.rosterForm.id);
                         if (index !== -1) this.roster[index] = { ...this.rosterForm };
-                        this.showToast('تم تحديث بيانات الطالب');
+                        this.showToast('تم تحديث بيانات الطالب في السجل');
                     } else {
                         this.roster.unshift({
                             id: Date.now(),
                             ...this.rosterForm
                         });
-                        this.showToast('تمت إضافة الطالب بنجاح');
+                        this.showToast('تمت إضافة الطالب الجديد بنجاح');
                     }
 
                     this.saveAllData();
@@ -1154,14 +1287,14 @@
                 toggleAuditStatus(st) {
                     st.sampleStatus = st.sampleStatus === 'selected' ? 'not_selected' : 'selected';
                     this.saveAllData();
-                    this.showToast(st.sampleStatus === 'selected' ? 'تم تحديد الطالب كعينة تدقيق' : 'تم إلغاء التحديد');
+                    this.showToast(st.sampleStatus === 'selected' ? 'تم تحديد الطالب كعينة تدقيق' : 'تم إلغاء تحديد العينة');
                 },
 
                 deleteRosterStudent(id) {
-                    if (confirm('هل أنت متأكد من حذف هذا الطالب؟')) {
+                    if (confirm('هل أنت متأكد من حذف هذا الطالب من السجل؟')) {
                         this.roster = this.roster.filter(s => s.id !== id);
                         this.saveAllData();
-                        this.showToast('تم حذف الطالب', 'warning');
+                        this.showToast('تم حذف الطالب من السجل', 'warning');
                     }
                 },
 
@@ -1300,7 +1433,7 @@
 
                 async saveSample() {
                     if (!this.sampleForm.studentName || !this.sampleForm.seatNumber) {
-                        return alert('الرجاء كتابة اسم الطالب ورقم الجلوس/المدني');
+                        return alert('الرجاء كتابة اسم الطالب ورقم الجلوس');
                     }
 
                     this.uploadingFile = true;
@@ -1342,6 +1475,11 @@
                         this.updateChart();
                         this.showToast('تم حذف العينة', 'warning');
                     }
+                },
+
+                isImage(url) {
+                    if (!url) return false;
+                    return url.match(/\.(jpeg|jpg|gif|png|webp|svg)$/i) || url.startsWith('data:image/');
                 },
 
                 viewDocument(item, type = 'doc') {
