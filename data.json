@@ -15,6 +15,14 @@
       "date": "2026-09-05",
       "description": "خطة الفصل الدراسي مع التوزيع الزمني لأدوات التقويم والوحدات.",
       "fileUrl": ""
+    },
+    {
+      "id": 1790536754068,
+      "title": "الخطة المدرسية ",
+      "category": "خطط دراسية",
+      "date": "2026-09-27",
+      "description": "",
+      "fileUrl": "https://raw.githubusercontent.com/workspaceoman-faissal/grade12-audit-platform/main/uploads/1790536785731_الخطة_الفصلية.pdf"
     }
   ],
   "assessments": [
